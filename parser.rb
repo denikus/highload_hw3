@@ -4,6 +4,7 @@ require 'net/http'
 require 'json'
 require 'securerandom'
 
+# GET currency rate from bank.gov.ua API
 url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json&valcode=USD'
 uri = URI(url)
 
@@ -12,8 +13,8 @@ bank_response = Net::HTTP.get(uri)
 res = JSON.parse(bank_response)
 
 
+# Form params to send to GA
 tracking_id = 'UA-212799322-1'
-
 # random user id
 cid = SecureRandom.uuid
 custom_metric_value = res[0]["rate"]
@@ -28,6 +29,8 @@ hostname = "highload-course.com"
 params_query = "tid=#{tracking_id}&dh=#{hostname}&cid=#{cid}&cm1=#{custom_metric_value}&ev=#{event_value}&el=#{event_label}&t=#{event}&dp=exchange_rate&ea=#{event_action}&ec=#{event_category}"
 ga_url = URI("https://www.google-analytics.com/collect?v=1&#{params_query}")
 
+
+# Sent params to GA 
 ga_response = Net::HTTP.post_form(ga_url, {} )
 
 puts ga_response
