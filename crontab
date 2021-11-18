@@ -1,0 +1,1 @@
+5 * * * * cd /Users/denis/vhosts/projector/homework_3 && rvm use 3.0.1 && pry parser.rb > /Users/denis/Downloads/crontab.log
